@@ -1,0 +1,252 @@
+<?xml version='1.0'?>
+<model cmeta:id="Cl_HCO2_model" name="Cl_HCO2_model" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+        <units name="joule_per_coulombmillivolt" units_ref="joule_per_coulombmillivolt"/>
+    </import>
+    <import xlink:href="../general/Generator.cellml">
+        <component component_ref="experiment" name="experiment"/>
+    </import>
+    <connection>
+        <map_components component_1="experiment" component_2="Weinstein_Cl_HCO2"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="Cl_I" variable_2="Cl_I"/>
+        <map_variables variable_1="HCO2_I" variable_2="HCO2_I"/>
+        <map_variables variable_1="Vi" variable_2="Vi"/>
+        <map_variables variable_1="Vm" variable_2="Vm"/>
+    </connection>
+    <component cmeta:id="Weinstein_Cl_HCO2" name="Weinstein_Cl_HCO2">
+        <variable name="time" private_interface="out" public_interface="in" units="second"/>
+        <variable name="Cl_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="HCO2_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="Vm" private_interface="in" public_interface="out" units="millivolt"/>
+        <variable name="Vi" private_interface="in" public_interface="out" units="millivolt"/>
+        <variable name="Cl_ClHCO2_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="HCO2_ClHCO2_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="F" private_interface="none" public_interface="in" units="coulomb_per_mole"/>
+        <variable name="Cl_M" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="HCO2_M" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="zcl" private_interface="none" public_interface="in" units="dimensionless"/>
+        <variable name="zhco2" private_interface="none" public_interface="in" units="dimensionless"/>
+        <variable name="L_clhco2" private_interface="none" public_interface="in" units="millimole2_per_joulesecond"/>
+        <variable name="Ami" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="rte" private_interface="none" public_interface="in" units="joule_per_millimole"/>
+        <variable initial_value="0.0" name="m" public_interface="out" units="second"/>
+        <variable name="mu_Cl_M" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_HCO2_M" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_Cl_I" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_HCO2_I" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="delta_mu_Cl" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="delta_mu_HCO2" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>mu_Cl_M</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <apply>
+                                <divide/>
+                                <ci>Cl_M</ci>
+                                <cn cellml:units="molar">1</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zcl</ci>
+                        <ci>F</ci>
+                        <ci>Vm</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_Cl_I</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <apply>
+                                <divide/>
+                                <ci>Cl_I</ci>
+                                <cn cellml:units="molar">1</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zcl</ci>
+                        <ci>F</ci>
+                        <ci>Vi</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_HCO2_M</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <apply>
+                                <divide/>
+                                <ci>HCO2_M</ci>
+                                <cn cellml:units="molar">1</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zhco2</ci>
+                        <ci>F</ci>
+                        <ci>Vm</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_HCO2_I</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <apply>
+                                <divide/>
+                                <ci>HCO2_I</ci>
+                                <cn cellml:units="molar">1</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zhco2</ci>
+                        <ci>F</ci>
+                        <ci>Vi</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_mu_Cl</ci>
+                <apply>
+                    <minus/>
+                    <ci>mu_Cl_M</ci>
+                    <ci>mu_Cl_I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_mu_HCO2</ci>
+                <apply>
+                    <minus/>
+                    <ci>mu_HCO2_M</ci>
+                    <ci>mu_HCO2_I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Cl_ClHCO2_Flux</ci>
+                <apply>
+                    <times/>
+                    <ci>L_clhco2</ci>
+                    <ci>Ami</ci>
+                    <apply>
+                        <minus/>
+                        <ci>delta_mu_Cl</ci>
+                        <ci>delta_mu_HCO2</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>HCO2_ClHCO2_Flux</ci>
+                <apply>
+                    <times/>
+                    <apply>
+                        <minus/>
+                        <ci>L_clhco2</ci>
+                    </apply>
+                    <ci>Ami</ci>
+                    <apply>
+                        <minus/>
+                        <ci>delta_mu_Cl</ci>
+                        <ci>delta_mu_HCO2</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>m</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1</cn>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="Weinstein_Cl_HCO2">
+            <component_ref component="experiment"/>
+        </component_ref>
+    </group>
+</model>

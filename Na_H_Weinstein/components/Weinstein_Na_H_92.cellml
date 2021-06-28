@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<model name="Weinstein_Na_H" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+    </import>
+    <component name="input_values">
+        <variable initial_value="0.225e-7" name="L_NaH" private_interface="out" public_interface="out" units="millimole2_per_joulesecond"/>
+        <variable initial_value="36" name="Ami" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0.140" name="Na_M" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="4.95e-8" name="H_M" private_interface="out" public_interface="out" units="molar"/>
+    </component>
+</model>

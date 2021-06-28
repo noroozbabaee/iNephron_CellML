@@ -1,0 +1,67 @@
+<?xml version='1.0'?>
+<model name="experiment_KCl" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+    </import>
+    <import xlink:href="../components/KCl.cellml">
+        <component component_ref="Weinstein_KCl" name="Weinstein_KCl"/>
+    </import>
+    <import xlink:href="../general/Parameters_for_EpithelialCell.cellml">
+        <component component_ref="parameter_values" name="parameter_values"/>
+    </import>
+    <import xlink:href="../components/Weinstein_KCl_92.cellml">
+        <component component_ref="input_values" name="input_values"/>
+    </import>
+    <connection>
+        <map_components component_1="parameter_values" component_2="Weinstein_KCl"/>
+        <map_variables variable_1="F" variable_2="F"/>
+        <map_variables variable_1="zk" variable_2="zk"/>
+        <map_variables variable_1="zcl" variable_2="zcl"/>
+        <map_variables variable_1="rte" variable_2="rte"/>
+        <map_variables variable_1="Vs" variable_2="Vs"/>
+    </connection>
+    <connection>
+        <map_components component_1="input_values" component_2="Weinstein_KCl"/>
+        <map_variables variable_1="L_kcl" variable_2="L_kcl"/>
+        <map_variables variable_1="K_S" variable_2="K_S"/>
+        <map_variables variable_1="Cl_S" variable_2="Cl_S"/>
+        <map_variables variable_1="Ais" variable_2="Ais"/>
+    </connection>
+    <component name="output">
+        <variable name="time" public_interface="out" units="second"/>
+        <variable name="K_I" public_interface="in" units="molar"/>
+        <variable name="Cl_I" public_interface="in" units="molar"/>
+        <variable name="Vi" public_interface="in" units="millivolt"/>
+        <variable name="K_KCl_Flux" public_interface="in" units="millimole_per_second"/>
+        <variable name="Cl_KCl_Flux" public_interface="in" units="millimole_per_second"/>
+        <variable name="mu_K_S" public_interface="in" units="joule_per_millimole"/>
+        <variable name="mu_K_I" public_interface="in" units="joule_per_millimole"/>
+        <variable name="mu_Cl_S" public_interface="in" units="joule_per_millimole"/>
+        <variable name="mu_Cl_I" public_interface="in" units="joule_per_millimole"/>
+        <variable name="delta_mu_K" public_interface="in" units="joule_per_millimole"/>
+        <variable name="delta_mu_Cl" public_interface="in" units="joule_per_millimole"/>
+        <variable name="m" public_interface="in" units="second"/>
+    </component>
+    <connection>
+        <map_components component_1="output" component_2="Weinstein_KCl"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="Cl_I" variable_2="Cl_I"/>
+        <map_variables variable_1="K_I" variable_2="K_I"/>
+        <map_variables variable_1="Vi" variable_2="Vi"/>
+        <map_variables variable_1="K_KCl_Flux" variable_2="K_KCl_Flux"/>
+        <map_variables variable_1="Cl_KCl_Flux" variable_2="Cl_KCl_Flux"/>
+        <map_variables variable_1="mu_K_S" variable_2="mu_K_S"/>
+        <map_variables variable_1="mu_K_I" variable_2="mu_K_I"/>
+        <map_variables variable_1="mu_Cl_S" variable_2="mu_Cl_S"/>
+        <map_variables variable_1="mu_Cl_I" variable_2="mu_Cl_I"/>
+        <map_variables variable_1="delta_mu_K" variable_2="delta_mu_K"/>
+        <map_variables variable_1="delta_mu_Cl" variable_2="delta_mu_Cl"/>
+        <map_variables variable_1="m" variable_2="m"/>
+    </connection>
+</model>

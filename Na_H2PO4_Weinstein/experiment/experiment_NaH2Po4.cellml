@@ -1,0 +1,74 @@
+<?xml version='1.0'?>
+<model name="experiment_NaH2PO4" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- =============================================	  DOCUMENTATION		============================================= -->
+    <!-- =============================================	Import the required units from the Units file	==================================================== -->
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+    </import>
+    <!--========================================= Import Required Componont =========================================-->
+    <import xlink:href="../components/Na_H2PO4.cellml">
+        <component component_ref="Weinstein_NaH2PO4" name="Weinstein_NaH2PO4"/>
+    </import>
+    <!--=====================================	Import all Parameters from the Parameter file	============================================== -->
+    <import xlink:href="../general/Parameters_for_EpithelialCell.cellml">
+        <component component_ref="parameter_values" name="parameter_values"/>
+    </import>
+    <import xlink:href="../components/Weinstein_NaH2PO4_92.cellml">
+        <component component_ref="input_values" name="input_values"/>
+    </import>
+    <!--========================================= Connect Component to Parameters  =========================================-->
+    <connection>
+        <map_components component_1="parameter_values" component_2="Weinstein_NaH2PO4"/>
+        <map_variables variable_1="F" variable_2="F"/>
+        <map_variables variable_1="zna" variable_2="zna"/>
+        <map_variables variable_1="zh2po4" variable_2="zh2po4"/>
+        <map_variables variable_1="rte" variable_2="rte"/>
+    </connection>
+    <connection>
+        <map_components component_1="input_values" component_2="Weinstein_NaH2PO4"/>
+        <map_variables variable_1="L_nah2po4" variable_2="L_nah2po4"/>
+        <map_variables variable_1="Na_M" variable_2="Na_M"/>
+        <map_variables variable_1="H2PO4_M" variable_2="H2PO4_M"/>
+        <map_variables variable_1="Ami" variable_2="Ami"/>
+    </connection>
+    <!-- ========================================	experiment_SGLT_Output	============================================= -->
+    <component name="output">
+        <variable name="time" public_interface="out" units="second"/>
+        <variable name="Na_I" public_interface="in" units="molar"/>
+        <variable name="H2PO4_I" public_interface="in" units="molar"/>
+        <variable name="Vm" public_interface="in" units="millivolt"/>
+        <variable name="Vi" public_interface="in" units="millivolt"/>
+        <variable name="Na_NaH2PO4_Flux" public_interface="in" units="millimole_per_second"/>
+        <variable name="H2PO4_NaH2PO4_Flux" public_interface="in" units="millimole_per_second"/>
+        <variable name="mu_Na_M" public_interface="in" units="joule_per_millimole"/>
+        <variable name="mu_Na_I" public_interface="in" units="joule_per_millimole"/>
+        <variable name="mu_H2PO4_M" public_interface="in" units="joule_per_millimole"/>
+        <variable name="mu_H2PO4_I" public_interface="in" units="joule_per_millimole"/>
+        <variable name="delta_mu_Na" public_interface="in" units="joule_per_millimole"/>
+        <variable name="delta_mu_H2PO4" public_interface="in" units="joule_per_millimole"/>
+        <variable name="m" public_interface="in" units="second"/>
+    </component>
+    <connection>
+        <map_components component_1="output" component_2="Weinstein_NaH2PO4"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="H2PO4_I" variable_2="H2PO4_I"/>
+        <map_variables variable_1="Na_I" variable_2="Na_I"/>
+        <map_variables variable_1="Vi" variable_2="Vi"/>
+        <map_variables variable_1="Vm" variable_2="Vm"/>
+        <map_variables variable_1="Na_NaH2PO4_Flux" variable_2="Na_NaH2PO4_Flux"/>
+        <map_variables variable_1="H2PO4_NaH2PO4_Flux" variable_2="H2PO4_NaH2PO4_Flux"/>
+        <map_variables variable_1="mu_Na_M" variable_2="mu_Na_M"/>
+        <map_variables variable_1="mu_Na_I" variable_2="mu_Na_I"/>
+        <map_variables variable_1="mu_H2PO4_M" variable_2="mu_H2PO4_M"/>
+        <map_variables variable_1="mu_H2PO4_I" variable_2="mu_H2PO4_I"/>
+        <map_variables variable_1="delta_mu_Na" variable_2="delta_mu_Na"/>
+        <map_variables variable_1="delta_mu_H2PO4" variable_2="delta_mu_H2PO4"/>
+        <map_variables variable_1="m" variable_2="m"/>
+    </connection>
+</model>

@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<model name="Weinstein_H_ATPS" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+        <units name="millimole_per_joule" units_ref="millimole_per_joule"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="joule_per_coulomb" units_ref="joule_per_coulomb"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+    </import>
+    <component name="input_values">
+        <variable initial_value="4.95e-08" name="H_M" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="0.4" name="xihp" private_interface="out" public_interface="out" units="millimole_per_joule"/>
+        <variable initial_value="0.5e-07" name="lhp" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable initial_value="0.145e+01" name="xhp" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+    </component>
+</model>

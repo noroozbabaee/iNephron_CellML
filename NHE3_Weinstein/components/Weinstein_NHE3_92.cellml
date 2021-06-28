@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+<model name="Weinstein_NHE3" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- =============================================	Import the required units from the Units file	==================================================== -->
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="molar" units_ref="molar"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+    </import>
+    <!-- ========================================		INPUT VALUES		============================================= -->
+    <component name="input_values">
+        <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Equilibrium Constants  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;- -->
+        <variable initial_value="0.300e-01" name="k_nah_na" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="0.7200e-07" name="k_nah_h" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="0.2700e-01" name="k_nah_nh4" private_interface="out" public_interface="out" units="molar"/>
+        <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-Permeation Velocities or Maximal Unidirectional Flux(2007) &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;- -->
+        <!--var p_nah_na: per_second {init: 0.792e+04, pub: out, priv: out};
+var p_nah_h: per_second {init: 0.238e+04, pub: out, priv: out};
+var p_nah_nh4: per_second {init: 0.792e+04, pub: out, priv: out};-->
+        <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-Permeation Velocities or Maximal Unidirectional Flux(1996) &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;- -->
+        <variable initial_value="0.800e+04" name="p_nah_na" private_interface="out" public_interface="out" units="per_second"/>
+        <variable initial_value="0.2400e+04" name="p_nah_h" private_interface="out" public_interface="out" units="per_second"/>
+        <variable initial_value="0.800e+04" name="p_nah_nh4" private_interface="out" public_interface="out" units="per_second"/>
+        <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-Internal Modifier Parameters&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;- -->
+        <variable initial_value="0.200e+01" name="f_M" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0.0" name="f_m" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0.100e-05" name="k_mod" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="36" name="Ami" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0.14" name="Na_M" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="4.95e-8" name="H_M" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="0.0002" name="NH4_M" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="0.275e-8" name="NNHE3" private_interface="out" public_interface="out" units="dimensionless"/>
+    </component>
+</model>

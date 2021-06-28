@@ -1,0 +1,17 @@
+<?xml version='1.0'?>
+<model name="Weinstein_NaH2PO4" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- =============================================	  DOCUMENTATION		============================================= -->
+    <!-- =============================================	Import the required units from the Units file	==================================================== -->
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+    </import>
+    <!-- ========================================		INPUT VALUES		============================================= -->
+    <component name="input_values">
+        <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-SGLT Parameters&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;- -->
+        <variable initial_value="0.125e-08" name="L_nah2po4" private_interface="out" public_interface="out" units="millimole2_per_joulesecond"/>
+        <variable initial_value="0.14" name="Na_M" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="0.00093" name="H2PO4_M" private_interface="out" public_interface="out" units="molar"/>
+        <variable initial_value="36" name="Ami" private_interface="out" public_interface="out" units="dimensionless"/>
+    </component>
+</model>

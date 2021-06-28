@@ -1,0 +1,58 @@
+<?xml version='1.0'?>
+<model name="experiment_H_ATPS" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_coulomb" units_ref="joule_per_coulomb"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="millimole_per_joule" units_ref="millimole_per_joule"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+        <units name="molar" units_ref="molar"/>
+    </import>
+    <import xlink:href="../components/H_ATPS.cellml">
+        <component component_ref="Weinstein_H_ATPS" name="Weinstein_H_ATPS"/>
+    </import>
+    <import xlink:href="../general/Parameters_for_EpithelialCell.cellml">
+        <component component_ref="parameter_values" name="parameter_values"/>
+    </import>
+    <import xlink:href="../components/Weinstein_H_ATPS_92.cellml">
+        <component component_ref="input_values" name="input_values"/>
+    </import>
+    <connection>
+        <map_components component_1="parameter_values" component_2="Weinstein_H_ATPS"/>
+        <map_variables variable_1="F" variable_2="F"/>
+        <map_variables variable_1="zh" variable_2="zh"/>
+        <map_variables variable_1="rte" variable_2="rte"/>
+        <map_variables variable_1="Ami" variable_2="Ami"/>
+    </connection>
+    <connection>
+        <map_components component_1="input_values" component_2="Weinstein_H_ATPS"/>
+        <map_variables variable_1="H_M" variable_2="H_M"/>
+        <map_variables variable_1="xihp" variable_2="xihp"/>
+        <map_variables variable_1="xhp" variable_2="xhp"/>
+        <map_variables variable_1="lhp" variable_2="lhp"/>
+    </connection>
+    <component name="output">
+        <variable name="time" public_interface="out" units="second"/>
+        <variable name="H_I" public_interface="in" units="molar"/>
+        <variable name="Vm" public_interface="in" units="joule_per_coulomb"/>
+        <variable name="Vi" public_interface="in" units="joule_per_coulomb"/>
+        <variable name="H_ATPS_Flux" public_interface="in" units="millimole_per_second"/>
+        <variable name="mu_H_M" public_interface="in" units="joule_per_millimole"/>
+        <variable name="mu_H_I" public_interface="in" units="joule_per_millimole"/>
+        <variable name="delta_mu_H" public_interface="in" units="joule_per_millimole"/>
+        <variable name="m" public_interface="in" units="second"/>
+    </component>
+    <connection>
+        <map_components component_1="output" component_2="Weinstein_H_ATPS"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="H_I" variable_2="H_I"/>
+        <map_variables variable_1="Vi" variable_2="Vi"/>
+        <map_variables variable_1="Vm" variable_2="Vm"/>
+        <map_variables variable_1="H_ATPS_Flux" variable_2="H_ATPS_Flux"/>
+        <map_variables variable_1="mu_H_M" variable_2="mu_H_M"/>
+        <map_variables variable_1="mu_H_I" variable_2="mu_H_I"/>
+        <map_variables variable_1="delta_mu_H" variable_2="delta_mu_H"/>
+        <map_variables variable_1="m" variable_2="m"/>
+    </connection>
+</model>

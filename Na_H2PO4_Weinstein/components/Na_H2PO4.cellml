@@ -1,0 +1,241 @@
+<?xml version='1.0'?>
+<model cmeta:id="Na_H2PO4_model" name="Na_H2PO4_model" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- =============================================	Import the required units from the Units file	==================================================== -->
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+        <units name="joule_per_coulombmillivolt" units_ref="joule_per_coulombmillivolt"/>
+    </import>
+    <!--=================================== INPUT  CONNECTIONS =============================      -->
+    <import xlink:href="../general/Generator.cellml">
+        <component component_ref="experiment" name="experiment"/>
+    </import>
+    <!-- ========================================	SGLT1 TOP-LEVEL COMPONENT		============================================= -->
+    <connection>
+        <map_components component_1="experiment" component_2="Weinstein_NaH2PO4"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="Na_I" variable_2="Na_I"/>
+        <map_variables variable_1="H2PO4_I" variable_2="H2PO4_I"/>
+        <map_variables variable_1="Vm" variable_2="Vm"/>
+        <map_variables variable_1="Vi" variable_2="Vi"/>
+    </connection>
+    <!-- ========================================	Weinstein_SGLT_TRANSPORTER	============================================= -->
+    <component cmeta:id="Weinstein_NaH2PO4" name="Weinstein_NaH2PO4">
+        <!-- Inputs from other components -->
+        <variable name="time" private_interface="out" public_interface="in" units="second"/>
+        <variable name="Na_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="H2PO4_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="Vm" private_interface="in" public_interface="out" units="millivolt"/>
+        <variable name="Vi" private_interface="in" public_interface="out" units="millivolt"/>
+        <!-- Outputs to other components -->
+        <variable name="Na_NaH2PO4_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="H2PO4_NaH2PO4_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <!-- Parameters from parameter_file -->
+        <variable name="F" private_interface="none" public_interface="in" units="coulomb_per_mole"/>
+        <variable name="Na_M" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="H2PO4_M" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="zna" private_interface="none" public_interface="in" units="dimensionless"/>
+        <variable name="zh2po4" private_interface="none" public_interface="in" units="dimensionless"/>
+        <variable name="L_nah2po4" private_interface="none" public_interface="in" units="millimole2_per_joulesecond"/>
+        <variable name="Ami" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="rte" private_interface="none" public_interface="in" units="joule_per_millimole"/>
+        <variable initial_value="0.0" name="m" public_interface="out" units="second"/>
+        <!-- Internal variables -->
+        <variable name="mu_Na_M" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_H2PO4_M" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_Na_I" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_H2PO4_I" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="delta_mu_Na" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="delta_mu_H2PO4" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>mu_Na_M</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <ci>Na_M</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zna</ci>
+                        <ci>F</ci>
+                        <ci>Vm</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_Na_I</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <ci>Na_I</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zna</ci>
+                        <ci>F</ci>
+                        <ci>Vi</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_H2PO4_M</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <ci>H2PO4_M</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zh2po4</ci>
+                        <ci>F</ci>
+                        <ci>Vm</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_H2PO4_I</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <ci>H2PO4_I</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zh2po4</ci>
+                        <ci>F</ci>
+                        <ci>Vi</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_mu_Na</ci>
+                <apply>
+                    <minus/>
+                    <ci>mu_Na_M</ci>
+                    <ci>mu_Na_I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_mu_H2PO4</ci>
+                <apply>
+                    <minus/>
+                    <ci>mu_H2PO4_M</ci>
+                    <ci>mu_H2PO4_I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Na_NaH2PO4_Flux</ci>
+                <apply>
+                    <times/>
+                    <ci>L_nah2po4</ci>
+                    <ci>Ami</ci>
+                    <apply>
+                        <plus/>
+                        <ci>delta_mu_Na</ci>
+                        <ci>delta_mu_H2PO4</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>H2PO4_NaH2PO4_Flux</ci>
+                <apply>
+                    <times/>
+                    <ci>L_nah2po4</ci>
+                    <ci>Ami</ci>
+                    <apply>
+                        <plus/>
+                        <ci>delta_mu_Na</ci>
+                        <ci>delta_mu_H2PO4</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>m</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1</cn>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="Weinstein_NaH2PO4">
+            <component_ref component="experiment"/>
+        </component_ref>
+    </group>
+</model>

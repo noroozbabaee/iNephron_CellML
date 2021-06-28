@@ -1,0 +1,232 @@
+<?xml version='1.0'?>
+<model cmeta:id="KCl_model" name="KCl_model" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+        <units name="joule_per_coulombmillivolt" units_ref="joule_per_coulombmillivolt"/>
+    </import>
+    <import xlink:href="../general/Generator.cellml">
+        <component component_ref="experiment" name="experiment"/>
+    </import>
+    <connection>
+        <map_components component_1="experiment" component_2="Weinstein_KCl"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="K_I" variable_2="K_I"/>
+        <map_variables variable_1="Cl_I" variable_2="Cl_I"/>
+        <map_variables variable_1="Vi" variable_2="Vi"/>
+    </connection>
+    <component cmeta:id="Weinstein_KCl" name="Weinstein_KCl">
+        <variable name="time" private_interface="out" public_interface="in" units="second"/>
+        <variable name="K_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="Cl_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="Vs" private_interface="none" public_interface="in" units="millivolt"/>
+        <variable name="Vi" private_interface="in" public_interface="out" units="millivolt"/>
+        <variable name="K_KCl_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="Cl_KCl_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="F" private_interface="none" public_interface="in" units="coulomb_per_mole"/>
+        <variable name="K_S" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="Cl_S" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="zk" private_interface="none" public_interface="in" units="dimensionless"/>
+        <variable name="zcl" private_interface="none" public_interface="in" units="dimensionless"/>
+        <variable name="L_kcl" private_interface="none" public_interface="in" units="millimole2_per_joulesecond"/>
+        <variable name="Ais" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="rte" private_interface="none" public_interface="in" units="joule_per_millimole"/>
+        <variable name="mu_K_S" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_Cl_S" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_K_I" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_Cl_I" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="delta_mu_K" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="delta_mu_Cl" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable initial_value="0.0" name="m" public_interface="out" units="second"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>mu_K_S</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <ci>K_S</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zk</ci>
+                        <ci>F</ci>
+                        <ci>Vs</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_K_I</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <ci>K_I</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zk</ci>
+                        <ci>F</ci>
+                        <ci>Vi</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_Cl_S</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <ci>Cl_S</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zcl</ci>
+                        <ci>F</ci>
+                        <ci>Vs</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_Cl_I</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <ci>Cl_I</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zcl</ci>
+                        <ci>F</ci>
+                        <ci>Vi</ci>
+                        <cn cellml:units="joule_per_coulombmillivolt">1</cn>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_mu_K</ci>
+                <apply>
+                    <minus/>
+                    <ci>mu_K_I</ci>
+                    <ci>mu_K_S</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_mu_Cl</ci>
+                <apply>
+                    <minus/>
+                    <ci>mu_Cl_I</ci>
+                    <ci>mu_Cl_S</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>K_KCl_Flux</ci>
+                <apply>
+                    <times/>
+                    <ci>L_kcl</ci>
+                    <ci>Ais</ci>
+                    <apply>
+                        <plus/>
+                        <ci>delta_mu_K</ci>
+                        <ci>delta_mu_Cl</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Cl_KCl_Flux</ci>
+                <apply>
+                    <times/>
+                    <ci>L_kcl</ci>
+                    <ci>Ais</ci>
+                    <apply>
+                        <plus/>
+                        <ci>delta_mu_K</ci>
+                        <ci>delta_mu_Cl</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>m</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1</cn>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="Weinstein_KCl">
+            <component_ref component="experiment"/>
+        </component_ref>
+    </group>
+</model>

@@ -1,0 +1,61 @@
+<?xml version='1.0'?>
+<model name="experiment_NaK" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+    </import>
+    <import xlink:href="../components/NaK.cellml">
+        <component component_ref="Weinstein_NaK" name="Weinstein_NaK"/>
+    </import>
+    <import xlink:href="../general/Parameters_for_EpithelialCell.cellml">
+        <component component_ref="parameter_values" name="parameter_values"/>
+    </import>
+    <import xlink:href="../components/Weinstein_NaK_92.cellml">
+        <component component_ref="input_values" name="input_values"/>
+    </import>
+    <connection>
+        <map_components component_1="parameter_values" component_2="Weinstein_NaK"/>
+        <map_variables variable_1="Ais" variable_2="Ais"/>
+    </connection>
+    <connection>
+        <map_components component_1="input_values" component_2="Weinstein_NaK"/>
+        <map_variables variable_1="knp_NH4" variable_2="knp_NH4"/>
+        <map_variables variable_1="Na_S" variable_2="Na_S"/>
+        <map_variables variable_1="K_S" variable_2="K_S"/>
+        <map_variables variable_1="NH4_S" variable_2="NH4_S"/>
+    </connection>
+    <component name="output">
+        <variable name="time" public_interface="out" units="second"/>
+        <variable name="Na_I" public_interface="in" units="molar"/>
+        <variable name="K_I" public_interface="in" units="molar"/>
+        <variable name="NH4_I" public_interface="in" units="molar"/>
+        <variable name="Na_NaK_Flux" public_interface="in" units="millimole_per_second"/>
+        <variable name="knp_Na" public_interface="in" units="molar"/>
+        <variable name="knp_K" public_interface="in" units="molar"/>
+        <variable name="Na_Flux_1" public_interface="in" units="dimensionless"/>
+        <variable name="Na_Flux_2" public_interface="in" units="dimensionless"/>
+        <variable name="K_NaK_Flux" public_interface="in" units="millimole_per_second"/>
+        <variable name="NH4_NaK_Flux" public_interface="in" units="millimole_per_second"/>
+        <variable name="m" public_interface="in" units="second"/>
+    </component>
+    <connection>
+        <map_components component_1="output" component_2="Weinstein_NaK"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="Na_I" variable_2="Na_I"/>
+        <map_variables variable_1="K_I" variable_2="K_I"/>
+        <map_variables variable_1="NH4_I" variable_2="NH4_I"/>
+        <map_variables variable_1="Na_NaK_Flux" variable_2="Na_NaK_Flux"/>
+        <map_variables variable_1="knp_Na" variable_2="knp_Na"/>
+        <map_variables variable_1="knp_K" variable_2="knp_K"/>
+        <map_variables variable_1="Na_Flux_1" variable_2="Na_Flux_1"/>
+        <map_variables variable_1="Na_Flux_2" variable_2="Na_Flux_2"/>
+        <map_variables variable_1="K_NaK_Flux" variable_2="K_NaK_Flux"/>
+        <map_variables variable_1="NH4_NaK_Flux" variable_2="NH4_NaK_Flux"/>
+        <map_variables variable_1="m" variable_2="m"/>
+    </connection>
+</model>

@@ -1,0 +1,67 @@
+<?xml version='1.0'?>
+<model name="Units_for_EpithelialCell" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <units name="millisecond">
+        <unit prefix="milli" units="second"/>
+    </units>
+    <units name="per_second">
+        <unit exponent="-1" units="second"/>
+    </units>
+    <units name="per_millisecond">
+        <unit exponent="-1" units="millisecond"/>
+    </units>
+    <units name="millivolt">
+        <unit prefix="milli" units="volt"/>
+    </units>
+    <units name="millimole">
+        <unit prefix="milli" units="mole"/>
+    </units>
+    <units name="millimole_per_second">
+        <unit prefix="milli" units="mole"/>
+        <unit exponent="-1" units="second"/>
+    </units>
+    <units name="mole_per_second">
+        <unit units="mole"/>
+        <unit exponent="-1" units="second"/>
+    </units>
+    <units name="millimolar">
+        <unit prefix="milli" units="mole"/>
+        <unit exponent="-1" units="litre"/>
+    </units>
+    <units name="molar">
+        <unit units="mole"/>
+        <unit exponent="-1" units="litre"/>
+    </units>
+    <units name="joule_per_millimole">
+        <unit units="joule"/>
+        <unit exponent="-1" prefix="milli" units="mole"/>
+    </units>
+    <units name="joule_per_coulomb">
+        <unit units="joule"/>
+        <unit exponent="-1" units="coulomb"/>
+    </units>
+    <units name="joule_per_coulombmillivolt">
+        <unit units="joule"/>
+        <unit exponent="-1" units="coulomb"/>
+        <unit exponent="-1" prefix="milli" units="volt"/>
+    </units>
+    <units name="millimole_per_joule">
+        <unit exponent="-1" units="joule"/>
+        <unit prefix="milli" units="mole"/>
+    </units>
+    <units name="cm">
+        <unit prefix="centi" units="metre"/>
+    </units>
+    <units name="millimole_per_cm2">
+        <unit exponent="-2" units="cm"/>
+        <unit prefix="milli" units="mole"/>
+    </units>
+    <units name="coulomb_per_mole">
+        <unit units="coulomb"/>
+        <unit exponent="-1" units="mole"/>
+    </units>
+    <units name="millimole2_per_joulesecond">
+        <unit exponent="-1" units="joule"/>
+        <unit exponent="-1" units="second"/>
+        <unit exponent="2" prefix="milli" units="mole"/>
+    </units>
+</model>

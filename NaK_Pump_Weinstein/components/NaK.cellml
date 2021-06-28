@@ -1,0 +1,217 @@
+<?xml version='1.0'?>
+<model cmeta:id="NaK_pump" name="NaK_pump" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+        <units name="millimmole2_per_joulesecond" units_ref="millimmole2_per_joulesecond"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+        <units name="joule_per_coulombmillivolt" units_ref="joule_per_coulombmillivolt"/>
+    </import>
+    <import xlink:href="../general/Generator.cellml">
+        <component component_ref="experiment" name="experiment"/>
+    </import>
+    <connection>
+        <map_components component_1="experiment" component_2="Weinstein_NaK"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="Na_I" variable_2="Na_I"/>
+        <map_variables variable_1="K_I" variable_2="K_I"/>
+        <map_variables variable_1="NH4_I" variable_2="NH4_I"/>
+    </connection>
+    <component cmeta:id="Weinstein_NaK" name="Weinstein_NaK">
+        <variable name="time" private_interface="out" public_interface="in" units="second"/>
+        <variable name="Na_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="K_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="NH4_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="Na_NaK_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="Na_Flux_1" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="Na_Flux_2" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="K_NaK_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="NH4_NaK_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="knp_NH4" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="Na_S" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="K_S" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="NH4_S" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="Ais" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable initial_value="0.0" name="m" public_interface="out" units="second"/>
+        <variable name="knp_Na" private_interface="out" public_interface="out" units="molar"/>
+        <variable name="knp_K" private_interface="out" public_interface="out" units="molar"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>knp_Na</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.0002</cn>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="molar">1.0</cn>
+                        <apply>
+                            <divide/>
+                            <ci>K_I</ci>
+                            <cn cellml:units="dimensionless">0.00833</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>knp_K</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">0.0001</cn>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="molar">1.0</cn>
+                        <apply>
+                            <divide/>
+                            <ci>Na_I</ci>
+                            <cn cellml:units="dimensionless">0.0185</cn>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Na_Flux_1</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <divide/>
+                        <ci>Na_I</ci>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <plus/>
+                                <ci>Na_I</ci>
+                            </apply>
+                            <ci>knp_Na</ci>
+                        </apply>
+                    </apply>
+                    <cn cellml:units="dimensionless">3</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Na_Flux_2</ci>
+                <apply>
+                    <power/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <plus/>
+                            <ci>K_S</ci>
+                            <ci>NH4_S</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <plus/>
+                                <ci>K_S</ci>
+                            </apply>
+                            <ci>NH4_S</ci>
+                            <ci>knp_K</ci>
+                        </apply>
+                    </apply>
+                    <cn cellml:units="dimensionless">2</cn>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Na_NaK_Flux</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="millimole_per_second">1</cn>
+                    <ci>Ais</ci>
+                    <ci>Na_Flux_1</ci>
+                    <ci>Na_Flux_2</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>K_NaK_Flux</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <ci>Na_NaK_Flux</ci>
+                                </apply>
+                                <ci>Ais</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>K_S</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <ci>K_S</ci>
+                        <apply>
+                            <divide/>
+                            <ci>NH4_S</ci>
+                            <ci>knp_NH4</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>NH4_NaK_Flux</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <apply>
+                                    <minus/>
+                                    <ci>Na_NaK_Flux</ci>
+                                </apply>
+                                <ci>Ais</ci>
+                                <cn cellml:units="dimensionless">2</cn>
+                            </apply>
+                            <cn cellml:units="dimensionless">3</cn>
+                        </apply>
+                        <ci>NH4_S</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <apply>
+                            <times/>
+                            <ci>K_S</ci>
+                            <ci>knp_NH4</ci>
+                        </apply>
+                        <ci>NH4_S</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>m</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1</cn>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="Weinstein_NaK">
+            <component_ref component="experiment"/>
+        </component_ref>
+    </group>
+</model>

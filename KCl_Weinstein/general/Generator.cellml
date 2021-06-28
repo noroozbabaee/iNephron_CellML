@@ -1,0 +1,419 @@
+<?xml version='1.0'?>
+<model name="Generator" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="molar" units_ref="molar"/>
+    </import>
+    <import xlink:href="environment.cellml">
+        <component component_ref="environment" name="environment"/>
+    </import>
+    <connection>
+        <map_components component_1="environment" component_2="experiment"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <component name="experiment">
+        <variable name="time" private_interface="out" public_interface="in" units="second"/>
+        <variable name="Na_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="K_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="Cl_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="HCO3_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="HCO2_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="NH4_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="H_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="Gluc_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="H2PO4_I" private_interface="none" public_interface="out" units="molar"/>
+        <variable name="Vm" private_interface="none" public_interface="out" units="millivolt"/>
+        <variable name="Vi" private_interface="none" public_interface="out" units="millivolt"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>Na_I</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="molar">0.01</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar">0.0096</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>K_I</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="molar">0.137</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar">0.012</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Cl_I</ci>
+                <apply>
+                    <minus/>
+                    <cn cellml:units="molar">0.016</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar">0.009</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>HCO3_I</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="molar">0.024</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar">0.009</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>HCO2_I</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="molar">0.001</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar">0.0001</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>NH4_I</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="molar">0.000234</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar">0.000404</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>H_I</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="molar" type="e-notation">4.95<sep/>-8</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar" type="e-notation">0.9<sep/>-8</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>H2PO4_I</ci>
+                <apply>
+                    <minus/>
+                    <cn cellml:units="molar">0.0149</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar">0.0049</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Gluc_I</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="molar">0.005</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="molar">0.005</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Vm</ci>
+                <apply>
+                    <minus/>
+                    <cn cellml:units="millivolt">0.01</cn>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="millivolt">0.01</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Vi</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <cn cellml:units="millivolt">57</cn>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <cn cellml:units="millivolt">5</cn>
+                            <cn cellml:units="dimensionless">1</cn>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <apply>
+                                <exp/>
+                                <apply>
+                                    <minus/>
+                                    <apply>
+                                        <minus/>
+                                        <apply>
+                                            <times/>
+                                            <cn cellml:units="per_second">0.5</cn>
+                                            <ci>time</ci>
+                                        </apply>
+                                        <cn cellml:units="dimensionless">100</cn>
+                                    </apply>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

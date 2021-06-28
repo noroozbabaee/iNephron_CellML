@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<model name="Parameters_for_EpithelialCell" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="Units_for_EpithelialCell.cellml">
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="millivolt" units_ref="millivolt"/>
+    </import>
+    <component name="parameter_values">
+        <variable initial_value="96485" name="F" private_interface="out" public_interface="out" units="coulomb_per_mole"/>
+        <variable initial_value="1" name="zna" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="1" name="zk" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="-1" name="zcl" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="-1" name="zhco3" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="-1" name="zhco2" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="-1" name="zh2po4" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="1" name="znh4" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0" name="zgluc" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="1" name="zh" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="2.57" name="rte" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable initial_value="36" name="Ami" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="36" name="Aie" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0.1e+01" name="Ais" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable initial_value="0" name="Vs" private_interface="out" public_interface="out" units="millivolt"/>
+    </component>
+</model>

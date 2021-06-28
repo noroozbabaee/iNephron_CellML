@@ -1,0 +1,163 @@
+<?xml version='1.0'?>
+<model cmeta:id="H_ATPS_model" name="H_ATPS_model" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+        <units name="millimole_per_joule" units_ref="millimole_per_joule"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="joule_per_coulomb" units_ref="joule_per_coulomb"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+    </import>
+    <import xlink:href="../general/Generator.cellml">
+        <component component_ref="experiment" name="experiment"/>
+    </import>
+    <connection>
+        <map_components component_1="experiment" component_2="Weinstein_H_ATPS"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="H_I" variable_2="H_I"/>
+        <map_variables variable_1="Vm" variable_2="Vm"/>
+        <map_variables variable_1="Vi" variable_2="Vi"/>
+    </connection>
+    <component cmeta:id="Weinstein_H_ATPS" name="Weinstein_H_ATPS">
+        <variable name="time" private_interface="out" public_interface="in" units="second"/>
+        <variable name="H_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="Vm" private_interface="in" public_interface="out" units="millivolt"/>
+        <variable name="Vi" private_interface="in" public_interface="out" units="millivolt"/>
+        <variable name="H_ATPS_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="F" private_interface="none" public_interface="in" units="coulomb_per_mole"/>
+        <variable name="H_M" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="zh" private_interface="none" public_interface="in" units="dimensionless"/>
+        <variable name="Ami" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="rte" private_interface="none" public_interface="in" units="joule_per_millimole"/>
+        <variable name="lhp" private_interface="none" public_interface="in" units="millimole_per_second"/>
+        <variable name="xhp" private_interface="out" public_interface="in" units="joule_per_millimole"/>
+        <variable name="xihp" private_interface="out" public_interface="in" units="millimole_per_joule"/>
+        <variable initial_value="0.0" name="m" public_interface="out" units="second"/>
+        <variable name="mu_H_M" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="mu_H_I" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <variable name="delta_mu_H" private_interface="out" public_interface="out" units="joule_per_millimole"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>mu_H_M</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <apply>
+                                <divide/>
+                                <ci>H_M</ci>
+                                <cn cellml:units="molar">1</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zh</ci>
+                        <ci>F</ci>
+                        <ci>Vm</ci>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>mu_H_I</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>rte</ci>
+                        <apply>
+                            <ln/>
+                            <apply>
+                                <divide/>
+                                <ci>H_I</ci>
+                                <cn cellml:units="molar">1</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>zh</ci>
+                        <ci>F</ci>
+                        <ci>Vi</ci>
+                        <apply>
+                            <power/>
+                            <cn cellml:units="dimensionless">10.0</cn>
+                            <apply>
+                                <minus/>
+                                <cn cellml:units="dimensionless">6</cn>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_mu_H</ci>
+                <apply>
+                    <minus/>
+                    <ci>mu_H_M</ci>
+                    <ci>mu_H_I</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>H_ATPS_Flux</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <minus/>
+                        <ci>lhp</ci>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <cn cellml:units="dimensionless">1</cn>
+                        <apply>
+                            <exp/>
+                            <apply>
+                                <times/>
+                                <ci>xihp</ci>
+                                <apply>
+                                    <minus/>
+                                    <ci>delta_mu_H</ci>
+                                    <ci>xhp</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>m</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1</cn>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="Weinstein_H_ATPS">
+            <component_ref component="experiment"/>
+        </component_ref>
+    </group>
+</model>

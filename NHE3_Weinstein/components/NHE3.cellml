@@ -1,0 +1,501 @@
+<?xml version='1.0'?>
+<model cmeta:id="NHE3_model" name="NHE3_model" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- ========================================	Import the required units from the Units file ==================================================== -->
+    <import xlink:href="../general/Units_for_EpithelialCell.cellml">
+        <units name="millivolt" units_ref="millivolt"/>
+        <units name="per_second" units_ref="per_second"/>
+        <units name="coulomb_per_mole" units_ref="coulomb_per_mole"/>
+        <units name="joule_per_millimole" units_ref="joule_per_millimole"/>
+        <units name="molar" units_ref="molar"/>
+        <units name="millimole2_per_joulesecond" units_ref="millimole2_per_joulesecond"/>
+        <units name="millimole_per_second" units_ref="millimole_per_second"/>
+        <units name="millimole" units_ref="millimole"/>
+        <units name="joule_per_coulombmillivolt" units_ref="joule_per_coulombmillivolt"/>
+        <units name="millimole_per_cm2" units_ref="millimole_per_cm2"/>
+    </import>
+    <!--=================================== INPUT  CONNECTIONS =============================      -->
+    <import xlink:href="../general/Generator.cellml">
+        <component component_ref="experiment" name="experiment"/>
+    </import>
+    <!-- ========================================	NHE3_TOP-LEVEL COMPONENT		============================================= -->
+    <connection>
+        <map_components component_1="experiment" component_2="Weinstein_NHE3"/>
+        <map_variables variable_1="time" variable_2="time"/>
+        <map_variables variable_1="Na_I" variable_2="Na_I"/>
+        <map_variables variable_1="H_I" variable_2="H_I"/>
+        <map_variables variable_1="NH4_I" variable_2="NH4_I"/>
+    </connection>
+    <!-- ========================================	Weinstein_NHE3 Exchanger	============================================= -->
+    <component cmeta:id="Weinstein_NHE3" name="Weinstein_NHE3">
+        <!-- Inputs from other components (Generator.cellml)-->
+        <variable name="time" private_interface="out" public_interface="in" units="second"/>
+        <variable name="Na_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="H_I" private_interface="in" public_interface="out" units="molar"/>
+        <variable name="NH4_I" private_interface="in" public_interface="out" units="molar"/>
+        <!-- Outputs to other components -->
+        <variable name="Na_NHE3_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="H_NHE3_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <variable name="NH4_NHE3_Flux" private_interface="out" public_interface="out" units="millimole_per_second"/>
+        <!-- Parameters from parameter_file -->
+        <variable name="Na_M" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="H_M" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="NH4_M" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="Ami" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="k_nah_na" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="k_nah_h" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="k_nah_nh4" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="p_nah_na" private_interface="out" public_interface="in" units="per_second"/>
+        <variable name="p_nah_h" private_interface="out" public_interface="in" units="per_second"/>
+        <variable name="p_nah_nh4" private_interface="out" public_interface="in" units="per_second"/>
+        <!-- Internal Modifier Parameters-->
+        <variable name="f_M" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="f_m" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="k_mod" private_interface="out" public_interface="in" units="molar"/>
+        <variable name="p_nah_mod_na" private_interface="out" public_interface="out" units="per_second"/>
+        <variable name="p_nah_mod_h" private_interface="out" public_interface="out" units="per_second"/>
+        <variable name="p_nah_mod_nh4" private_interface="out" public_interface="out" units="per_second"/>
+        <!-- Internal definitions-->
+        <variable name="ci_nah_na" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="ci_nah_h" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="ci_nah_nh4" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="cm_nah_na" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="cm_nah_h" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="cm_nah_nh4" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="delta_i" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="delta_m" private_interface="out" public_interface="out" units="dimensionless"/>
+        <variable name="epsilon_i" private_interface="out" public_interface="out" units="per_second"/>
+        <variable name="epsilon_m" private_interface="out" public_interface="out" units="per_second"/>
+        <variable name="sigma_nhe3" private_interface="out" public_interface="out" units="per_second"/>
+        <variable initial_value="1.0" name="ctc" public_interface="out" units="millimole"/>
+        <variable name="NNHE3" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable initial_value="0.0" name="m" public_interface="out" units="second"/>
+        <!-- Internal Modifier Equations-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>p_nah_mod_na</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_na</ci>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>f_M</ci>
+                                <ci>H_I</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>f_m</ci>
+                                <ci>k_mod</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <ci>H_I</ci>
+                        <ci>k_mod</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>p_nah_mod_h</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_h</ci>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>f_M</ci>
+                                <ci>H_I</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>f_m</ci>
+                                <ci>k_mod</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <ci>H_I</ci>
+                        <ci>k_mod</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>p_nah_mod_nh4</ci>
+                <apply>
+                    <divide/>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_nh4</ci>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>f_M</ci>
+                                <ci>H_I</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>f_m</ci>
+                                <ci>k_mod</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <plus/>
+                        <ci>H_I</ci>
+                        <ci>k_mod</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <!-- Normalized Concentrations For Internal and External Solutes-->
+            <apply>
+                <eq/>
+                <ci>ci_nah_na</ci>
+                <apply>
+                    <divide/>
+                    <ci>Na_I</ci>
+                    <ci>k_nah_na</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>ci_nah_h</ci>
+                <apply>
+                    <divide/>
+                    <ci>H_I</ci>
+                    <ci>k_nah_h</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>ci_nah_nh4</ci>
+                <apply>
+                    <divide/>
+                    <ci>NH4_I</ci>
+                    <ci>k_nah_nh4</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>cm_nah_na</ci>
+                <apply>
+                    <divide/>
+                    <ci>Na_M</ci>
+                    <ci>k_nah_na</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>cm_nah_h</ci>
+                <apply>
+                    <divide/>
+                    <ci>H_M</ci>
+                    <ci>k_nah_h</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>cm_nah_nh4</ci>
+                <apply>
+                    <divide/>
+                    <ci>NH4_M</ci>
+                    <ci>k_nah_nh4</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_i</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <ci>ci_nah_na</ci>
+                    <ci>ci_nah_h</ci>
+                    <ci>ci_nah_nh4</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>delta_m</ci>
+                <apply>
+                    <plus/>
+                    <cn cellml:units="dimensionless">1</cn>
+                    <ci>cm_nah_na</ci>
+                    <ci>cm_nah_h</ci>
+                    <ci>cm_nah_nh4</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>epsilon_i</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_mod_na</ci>
+                        <ci>ci_nah_na</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_mod_h</ci>
+                        <ci>ci_nah_h</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_mod_nh4</ci>
+                        <ci>ci_nah_nh4</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>epsilon_m</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_mod_na</ci>
+                        <ci>cm_nah_na</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_mod_h</ci>
+                        <ci>cm_nah_h</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>p_nah_mod_nh4</ci>
+                        <ci>cm_nah_nh4</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>sigma_nhe3</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <ci>delta_i</ci>
+                        <ci>epsilon_m</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>delta_m</ci>
+                        <ci>epsilon_i</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>Na_NHE3_Flux</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>NNHE3</ci>
+                                <ci>Ami</ci>
+                                <ci>p_nah_mod_na</ci>
+                                <ci>p_nah_mod_h</ci>
+                                <ci>ctc</ci>
+                            </apply>
+                            <ci>sigma_nhe3</ci>
+                        </apply>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <times/>
+                                <ci>cm_nah_na</ci>
+                                <ci>ci_nah_h</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>ci_nah_na</ci>
+                                <ci>cm_nah_h</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>p_nah_mod_na</ci>
+                                <ci>p_nah_mod_nh4</ci>
+                                <ci>ctc</ci>
+                            </apply>
+                            <ci>sigma_nhe3</ci>
+                        </apply>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <times/>
+                                <ci>cm_nah_na</ci>
+                                <ci>ci_nah_nh4</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>ci_nah_na</ci>
+                                <ci>cm_nah_nh4</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>H_NHE3_Flux</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>NNHE3</ci>
+                                <ci>Ami</ci>
+                                <ci>p_nah_mod_h</ci>
+                                <ci>p_nah_mod_na</ci>
+                                <ci>ctc</ci>
+                            </apply>
+                            <ci>sigma_nhe3</ci>
+                        </apply>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <times/>
+                                <ci>cm_nah_h</ci>
+                                <ci>ci_nah_na</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>ci_nah_h</ci>
+                                <ci>cm_nah_na</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>p_nah_mod_h</ci>
+                                <ci>p_nah_mod_nh4</ci>
+                                <ci>ctc</ci>
+                            </apply>
+                            <ci>sigma_nhe3</ci>
+                        </apply>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <times/>
+                                <ci>cm_nah_h</ci>
+                                <ci>ci_nah_nh4</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>ci_nah_h</ci>
+                                <ci>cm_nah_nh4</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>NH4_NHE3_Flux</ci>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>NNHE3</ci>
+                                <ci>Ami</ci>
+                                <ci>p_nah_mod_nh4</ci>
+                                <ci>p_nah_mod_na</ci>
+                                <ci>ctc</ci>
+                            </apply>
+                            <ci>sigma_nhe3</ci>
+                        </apply>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <times/>
+                                <ci>cm_nah_nh4</ci>
+                                <ci>ci_nah_na</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>ci_nah_nh4</ci>
+                                <ci>cm_nah_na</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>p_nah_mod_nh4</ci>
+                                <ci>p_nah_mod_h</ci>
+                                <ci>ctc</ci>
+                            </apply>
+                            <ci>sigma_nhe3</ci>
+                        </apply>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <times/>
+                                <ci>cm_nah_nh4</ci>
+                                <ci>ci_nah_h</ci>
+                            </apply>
+                            <apply>
+                                <times/>
+                                <ci>cm_nah_h</ci>
+                                <ci>ci_nah_nh4</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>m</ci>
+                </apply>
+                <cn cellml:units="dimensionless">1</cn>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="Weinstein_NHE3">
+            <component_ref component="experiment"/>
+        </component_ref>
+    </group>
+</model>
